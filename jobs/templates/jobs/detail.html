@@ -1,0 +1,27 @@
+<!-- jobs/templates/jobs/detail.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>{{ job.title }}</h1>
+<p>{{ job.description }}</p>
+
+{% if messages %}
+    {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
+
+{% if not has_profile %}
+    <div class="alert alert-warning">
+        You need to <a href="{% url 'create_profile' %}">create a job seeker profile</a> before applying.
+    </div>
+{% endif %}
+
+<form method="post" enctype="multipart/form-data" {% if not has_profile %}class="disabled-form"{% endif %}>
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" {% if not has_profile %}disabled{% endif %}>Submit Application</button>
+</form>
+{% endblock %}
