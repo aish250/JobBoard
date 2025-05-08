@@ -1,10 +1,14 @@
 <!-- jobs/templates/jobs/home.html -->
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Job Board - Home</title>
-</head>
-<body>
-    <h1>Welcome to the Job Board!</h1>
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Welcome to Job Board</h1>
+<p>Find your dream job or post opportunities</p>
+
+{% if user.is_authenticated %}
+    <a href="{% url 'job_list' %}" class="btn btn-primary">Browse Jobs</a>
+{% else %}
+    <a href="{% url 'login' %}" class="btn btn-primary">Login</a>
+    <a href="{% url 'signup' %}" class="btn btn-secondary">Sign Up</a>
+{% endif %}
+{% endblock %}
